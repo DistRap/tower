@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 
 module Ivory.Tower.Config.Parser
   ( ConfigParser()
@@ -37,7 +38,15 @@ instance Monad ConfigParser where
   return = pure
   (ConfigParser a) >>= f = ConfigParser
     (\v -> a v >>= \b -> unConfigParser (f b) v)
+#if !MIN_VERSION_base(4,13,0)
+  -- Monad(fail) was removed in GHC 8.8.1
   fail e = ConfigParser (const (Left e))
+#endif
+
+#if MIN_VERSION_base(4,13,0)
+instance MonadFail ConfigParser where
+  fail e = ConfigParser (const (Left e))
+#endif
 
 runConfigParser :: ConfigParser a -> Value -> Either String a
 runConfigParser = unConfigParser
