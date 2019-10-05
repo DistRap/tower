@@ -35,6 +35,7 @@ coroutineHandler :: (IvoryArea init, IvoryZero init, IvoryArea a, IvoryZero a)
 coroutineHandler chanInit chan name block = do
   (doInitChan, readyChan) <- liftTower channel
   lastValue <- state "last_value"
+  initialized <- stateInit "initialized" (ival false)
 
   handler readyChan name $ do
     coro <- coroutine <$> fmap showUnique handlerName <*> block
@@ -43,10 +44,15 @@ coroutineHandler chanInit chan name block = do
 
   handler chanInit (name ++ "_init") $ do
     doInit <- emitter doInitChan 1
-    callback $ const $ emitV doInit true
+    callback $ const $ do
+      store initialized true
+      emitV doInit true
 
   handler chan (name ++ "_raw") $ do
     doInit <- emitter doInitChan 1
     callback $ \ ref -> do
-      refCopy lastValue ref
-      emitV doInit false
+      isRdy <- deref initialized
+      ifte_ isRdy (do
+        refCopy lastValue ref
+        emitV doInit false
+        ) (return ())
