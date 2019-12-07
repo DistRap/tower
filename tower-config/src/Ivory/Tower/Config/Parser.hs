@@ -4,12 +4,14 @@ module Ivory.Tower.Config.Parser
   ( ConfigParser()
   , runConfigParser
   , string
+  , int
   , integer
   , double
   , bool
   , array
   , subsection
   , withDefault
+  , optional
   , (<|>)
   , (<?>)
   ) where
@@ -69,6 +71,9 @@ integer = configParser "integer" $ \v ->
     Right (VInteger a) -> Just a
     _ -> Nothing
 
+int :: ConfigParser Int
+int = fmap fromIntegral integer
+
 double :: ConfigParser Double
 double = configParser "double" $ \v ->
   case v of
@@ -119,3 +124,5 @@ infix 0 <?>
 withDefault :: ConfigParser a -> a -> ConfigParser a
 withDefault a d = a <|> return d
 
+optional :: ConfigParser a -> ConfigParser (Maybe a)
+optional a = Just <$> a <|> pure Nothing
