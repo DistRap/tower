@@ -18,13 +18,16 @@ data Importance
   | Optional
   deriving (Eq, Show)
 
+directivePrefix :: Char
+directivePrefix = '!'
+
 directive :: String -> B.ByteString -> Maybe FilePath
 directive tag l =
   if and [ l /= B.empty, h == B.empty, t' == B.empty ]
      then Just (B.unpack h')
      else Nothing
   where
-  (h , t ) = beforeafter (B.pack ("#" ++ tag ++ " \"")) l
+  (h , t ) = beforeafter (B.pack (directivePrefix:tag ++ " \"")) l
   (h', t') = beforeafter (B.pack "\"") t
   beforeafter s m = let (b, a) = B.breakSubstring s m
                         a' = B.drop (B.length s) a
