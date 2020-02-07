@@ -52,6 +52,9 @@ instance Applicative (Tower e) where
 instance MonadFix (Tower e) where
   mfix f = Tower $ mfix (unTower . f)
 
+instance MonadFail (Tower e) where
+  fail = error
+
 newtype SinkList backend a = SinkList { unSinkList :: [TowerBackendHandler backend a] }
   deriving (Semigroup, Monoid)
 
