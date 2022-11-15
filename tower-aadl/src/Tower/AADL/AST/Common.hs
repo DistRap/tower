@@ -39,11 +39,13 @@ data ThdIds = ThdIds
   , chanRxThds :: S.Set ThreadChans
   } deriving (Show, Eq)
 
-instance Monoid ThdIds where
-  mempty = ThdIds mempty mempty
-  c0 `mappend` c1 =
+instance Semigroup ThdIds where
+  (<>) c0 c1 =
     ThdIds (chanTxThds c0 `mappend` chanTxThds c1)
             (chanRxThds c0 `mappend` chanRxThds c1)
+
+instance Monoid ThdIds where
+  mempty = ThdIds mempty mempty
 
 getTxThds :: ThdIds -> [ThreadChans]
 getTxThds = S.toList . chanTxThds
