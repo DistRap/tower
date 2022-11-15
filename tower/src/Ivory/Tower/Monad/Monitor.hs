@@ -39,14 +39,14 @@ instance Functor (Monitor e) where
 
 instance Monad (Monitor e) where
   return x = Monitor $ return x
-  Monitor x >>= f = Monitor $ x >>= (unMonitor . f)
+  Monitor x >>= f = Monitor $ x >>= (\y -> unMonitor $ f y)
 
 instance Applicative (Monitor e) where
   pure = return
   (<*>) = ap
 
 instance MonadFix (Monitor e) where
-  mfix f = Monitor $ mfix (unMonitor . f)
+  mfix f = Monitor $ mfix (\x -> unMonitor $ f x)
 
 newtype Monitor' backend e a = Monitor'
   { unMonitor' :: WriterT ([AST.Handler], [SomeHandler backend], ModuleDef) (Tower' backend e) a

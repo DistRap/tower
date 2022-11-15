@@ -66,14 +66,14 @@ instance Functor (Handler area e) where
 
 instance Monad (Handler area e) where
   return x = Handler $ return x
-  Handler x >>= f = Handler $ x >>= (unHandler . f)
+  Handler x >>= f = Handler $ x >>= (\y -> unHandler $ f y)
 
 instance Applicative (Handler area e) where
   pure = return
   (<*>) = ap
 
 instance MonadFix (Handler area e) where
-  mfix f = Handler $ mfix (unHandler . f)
+  mfix f = Handler $ mfix (\x -> unHandler $ f x)
 
 newtype Handler' backend (area :: Area *) e a = Handler'
   { unHandler' :: ReaderT Unique
