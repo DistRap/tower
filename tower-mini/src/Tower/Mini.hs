@@ -201,7 +201,9 @@ mkMonitorName m = TAST.monitorName m ++ "_monitor"
 
 instance Monoid (TowerBackendOutput MiniBackend) where
     mempty = MiniOutput [] [] [] (const [])
-    mappend mo1 mo2 =
+
+instance Semigroup (TowerBackendOutput MiniBackend) where
+    (<>) mo1 mo2 =
       MiniOutput
         (outputInitCallbacks mo1   `mappend` outputInitCallbacks mo2)
         (outputPeriodCallbacks mo1 `mappend` outputPeriodCallbacks mo2)

@@ -43,14 +43,15 @@ instance Functor (Tower e) where
 
 instance Monad (Tower e) where
   return x = Tower $ return x
-  Tower x >>= f = Tower $ x >>= (unTower . f)
+  Tower x >>= f =
+    Tower $ x >>= (\y -> unTower $ f y)
 
 instance Applicative (Tower e) where
   pure = return
   (<*>) = ap
 
 instance MonadFix (Tower e) where
-  mfix f = Tower $ mfix (unTower . f)
+  mfix f = Tower $ mfix (\x -> unTower $ f x)
 
 instance MonadFail (Tower e) where
   fail = error

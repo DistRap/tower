@@ -40,10 +40,10 @@ data AADLBackend = AADLBackend
 instance TowerBackend AADLBackend where
   newtype TowerBackendCallback AADLBackend a
     = AADLCallback I.ModuleDef
-    deriving Monoid
+    deriving (Monoid, Semigroup)
   data    TowerBackendEmitter  AADLBackend    = AADLEmitter (String -> I.ModuleDef)
   newtype TowerBackendHandler  AADLBackend  a = AADLHandler (String -> I.ModuleDef)
-   deriving Monoid
+   deriving (Monoid, Semigroup)
   -- Takes a ModuleDef (containing the emitter declaration) and returns the
   -- monitor module name and monitor module.
   data TowerBackendMonitor     AADLBackend

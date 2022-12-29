@@ -44,9 +44,11 @@ data HasInit = NoInit | HasInit deriving (Show, Read, Eq, Ord)
 
 instance Monoid HasInit where
   mempty                    = NoInit
-  HasInit `mappend` _       = HasInit
-  _       `mappend` HasInit = HasInit
-  _       `mappend` _       = NoInit
+
+instance Semigroup HasInit where
+  HasInit <> _       = HasInit
+  _       <> HasInit = HasInit
+  _       <> _       = NoInit
 
 -- Intermediate data types that collect Tower elements into groups that are
 -- meaningful for AADL (notably, distinguishing active and passive threads).
@@ -66,12 +68,16 @@ data PassiveThreads = PassiveThreads
 
 instance Monoid ActiveThreads where
   mempty = ActiveThreads mempty [] [] [] [] []
-  ActiveThreads a0 b0 c0 d0 e0 f0 `mappend` ActiveThreads a1 b1 c1 d1 e1 f1 =
+
+instance Semigroup ActiveThreads where
+  ActiveThreads a0 b0 c0 d0 e0 f0 <> ActiveThreads a1 b1 c1 d1 e1 f1 =
     ActiveThreads (a0 <> a1) (b0 <> b1) (c0 <> c1) (d0 <> d1) (e0 <> e1) (f0 <> f1)
 
 instance Monoid PassiveThreads where
   mempty = PassiveThreads []
-  PassiveThreads a0 `mappend` PassiveThreads a1 =
+
+instance Semigroup PassiveThreads where
+  PassiveThreads a0 <> PassiveThreads a1 =
     PassiveThreads (a0++a1)
 
 injectInitThread :: ActiveThreads
