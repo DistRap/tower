@@ -1,11 +1,11 @@
+cabal-version:       2.2
 name:                tower
 version:             0.9.0.0
 author:              Galois, Inc.
 maintainer:          pat@galois.com
 category:            Language
 build-type:          Simple
-cabal-version:       >= 1.10
-license:             BSD3
+license:             BSD-3-Clause
 
 library
                         -- Exports
