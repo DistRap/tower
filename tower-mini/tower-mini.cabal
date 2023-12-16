@@ -30,11 +30,7 @@ test-suite simple
   hs-source-dirs:   test
   main-is:          Simple.hs
   build-depends: base >= 4.6
-               , containers
-               , filepath
                , ivory
-               , ivory-artifact
-               , ivory-backend-c
                , tower
                , tower-config
                , tower-mini
@@ -46,11 +42,9 @@ test-suite integrated
   hs-source-dirs:   test
   main-is:          Integrated.hs
   build-depends: base >= 4.6
-               , containers
                , filepath
                , ivory
                , ivory-artifact
-               , ivory-backend-c
                , tower
                , tower-config
                , tower-mini

@@ -45,9 +45,6 @@ test-suite tests
   ghc-options: -Wall
   build-depends: base >= 4.6,
                  bytestring,
-                 containers,
-                 directory,
-                 filepath,
                  tower,
                  tower-config
 
