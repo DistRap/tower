@@ -65,11 +65,10 @@ instance Functor (Handler area e) where
   fmap f (Handler h) = Handler $ fmap f h
 
 instance Monad (Handler area e) where
-  return x = Handler $ return x
   Handler x >>= f = Handler $ x >>= (\y -> unHandler $ f y)
 
 instance Applicative (Handler area e) where
-  pure = return
+  pure x = Handler $ pure x
   (<*>) = ap
 
 instance MonadFix (Handler area e) where

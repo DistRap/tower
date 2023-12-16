@@ -41,12 +41,11 @@ instance Functor (Tower e) where
   fmap f (Tower h) = Tower $ fmap f h
 
 instance Monad (Tower e) where
-  return x = Tower $ return x
   Tower x >>= f =
     Tower $ x >>= (\y -> unTower $ f y)
 
 instance Applicative (Tower e) where
-  pure = return
+  pure x = Tower $ pure x
   (<*>) = ap
 
 instance MonadFix (Tower e) where

@@ -32,17 +32,17 @@ import Ivory.Language
 newtype Monitor e a = Monitor
   { unMonitor :: forall backend. TowerBackend backend => Monitor' backend e a
   }
+
 -- GHC can't derive these trivial instances because of the RankNType.
 
 instance Functor (Monitor e) where
   fmap f (Monitor h) = Monitor $ fmap f h
 
 instance Monad (Monitor e) where
-  return x = Monitor $ return x
   Monitor x >>= f = Monitor $ x >>= (\y -> unMonitor $ f y)
 
 instance Applicative (Monitor e) where
-  pure = return
+  pure x = Monitor $ pure x
   (<*>) = ap
 
 instance MonadFix (Monitor e) where
