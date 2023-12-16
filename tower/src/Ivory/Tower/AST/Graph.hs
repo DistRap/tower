@@ -15,6 +15,8 @@ import Ivory.Tower.Types.Unique
 
 import Text.PrettyPrint.Mainland
 
+import qualified Data.Maybe
+
 data MessageSource = ThreadMessage Thread
                    | HandlerMessage Monitor Handler
                    deriving (Eq, Show, Ord)
@@ -54,7 +56,10 @@ threadHandlers (g, unv, tov) t
   $ reachable g threadv
   where
   fst3 (a,_,_) = a
-  Just threadv = tov (ThreadMessage t)
+  threadv =
+    Data.Maybe.fromMaybe
+      (error "Ivory.Tower.AST.Graph.threadHandlers expected Just Vertex but got Nothing")
+      $ tov (ThreadMessage t)
   mh (HandlerMessage m h) = (m,h)
   mh _ = error "Ivory.Tower.AST.Graph.threadHandlers impossible"
   -- invariant - ThreadMessage never reachable from ThreadMessage

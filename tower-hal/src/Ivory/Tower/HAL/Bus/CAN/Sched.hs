@@ -218,11 +218,13 @@ canScheduler mailboxes tasks = do
     -- Return a reference to the given task's current request. The task
     -- ID must be a valid index in task_states.
     let getTaskRequest = proc "get_task_request" $ \ task -> body $ do
-          let ((last_idx, _, last_task) : ts) = reverse task_states
-          forM_ (reverse ts) $ \ (idx, _, last_request) -> do
-            when (task ==? fromInteger idx) $ ret (constRef last_request)
-          assert (task ==? fromInteger last_idx)
-          ret (constRef last_task)
+          case reverse task_states of
+            [] -> error "Absurd empty task_states in getTaskRequest"
+            ((last_idx, _, last_task) : ts) -> do
+              forM_ (reverse ts) $ \ (idx, _, last_request) -> do
+                when (task ==? fromInteger idx) $ ret (constRef last_request)
+              assert (task ==? fromInteger last_idx)
+              ret (constRef last_task)
 
     -- Select the highest-priority task which is not already in a
     -- hardware mailbox, or return 'maxBound' if there is no such task.

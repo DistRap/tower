@@ -29,7 +29,12 @@ emitter :: (IvoryArea a, IvoryZero a)
         => ChanInput a -> Integer -> Handler b e (Emitter a)
 emitter (ChanInput chan@(Chan chanast)) bound = handlerName >>= \ nm -> Handler $ do
   -- the only things that produce ChanInput will only put ChanSync in it.
-  let AST.ChanSync syncchan = chanast
+  let syncchan = case chanast of
+        AST.ChanSync x -> x
+        x -> error
+              $ "emitter: expected AST.ChanSync but got "
+              <> show x
+
   n <- freshname $ "emitter_" ++ showUnique nm ++ "_chan_" ++ show (AST.sync_chan_label syncchan)
   let ast = AST.emitter n syncchan bound
   handlerPutASTEmitter ast
