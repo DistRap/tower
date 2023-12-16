@@ -1,3 +1,5 @@
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/distrap/tower/ci.yaml?branch=main)](https://github.com/distrap/tower/actions/workflows/ci.yaml)
+
 # [Tower][tower]
 
 ## About
@@ -11,8 +13,6 @@ target architectures. A backend for the [FreeRTOS][freertos] operating
 system running on the [STM32][] line of microcontrollers is available in
 the [ivory-tower-stm32][] repo, and a backend for general purpose POSIX
 operating systems is available in the [ivory-tower-posix][] repo.
-
-[![Build Status](https://travis-ci.org/GaloisInc/tower.svg?branch=tower-9)](https://travis-ci.org/GaloisInc/tower)
 
 ## Copyright and license
 
