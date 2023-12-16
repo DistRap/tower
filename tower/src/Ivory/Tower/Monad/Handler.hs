@@ -26,6 +26,7 @@ module Ivory.Tower.Monad.Handler
 
 import MonadLib
 import Control.Monad.Fix
+import Data.Kind (Type)
 import Ivory.Tower.Backend
 import Ivory.Tower.Types.Chan
 import Ivory.Tower.Types.Unique
@@ -71,7 +72,7 @@ instance Applicative (Handler area e) where
 instance MonadFix (Handler area e) where
   mfix f = Handler $ mfix (\x -> unHandler $ f x)
 
-newtype Handler' backend (area :: Area *) e a = Handler'
+newtype Handler' backend (area :: Area Type) e a = Handler'
   { unHandler' :: ReaderT Unique
                   (WriterT (PartialHandler, [TowerBackendEmitter backend], [TowerBackendCallback backend area])
                     (Monitor' backend e)) a
