@@ -63,13 +63,9 @@ library
                         base-compat >= 0.6,
                         monadLib,
                         containers,
-                        ghc-prim,
                         mainland-pretty >= 0.4.0.0,
-                        text,
-                        filepath,
                         ivory,
                         ivory-artifact,
-                        ivory-stdlib,
                         ivory-backend-c
   if impl(ghc < 8)
     build-depends:      semigroups
