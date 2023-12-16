@@ -26,7 +26,6 @@ library
                  , Tower.AADL.Render.Types
 
   build-depends: base >= 4.6
-               , base-compat
                , containers
                , directory
                , filepath

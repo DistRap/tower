@@ -19,9 +19,6 @@ module Tower.AADL.AST.Common
   ) where
 
 
-import           Prelude ()
-import           Prelude.Compat hiding (id)
-
 import           Tower.AADL.AST
 import qualified Ivory.Language.Syntax.Type as I
 
@@ -80,14 +77,14 @@ threadsChannels :: [(Thread, LocalId)] -> Connections
 threadsChannels ls = foldl' go M.empty ls
   where
   go :: Connections -> (Thread, LocalId) -> Connections
-  go cs (th, id) =
-    (M.unionWith mappend) (threadChannels th id) cs
+  go cs (th, locId) =
+    (M.unionWith mappend) (threadChannels th locId) cs
 
 threadChannels :: Thread -> LocalId -> Connections
-threadChannels th id = foldl' go M.empty (getThreadEndpoints th)
+threadChannels th locId = foldl' go M.empty (getThreadEndpoints th)
     where
     go :: Connections -> Endpoint -> Connections
-    go cs = insertConnectionId id cs
+    go cs = insertConnectionId locId cs
 
 data Endpoint =
     InputEp  Input

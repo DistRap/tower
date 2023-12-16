@@ -14,9 +14,6 @@
 
 module Tower.AADL.CodeGen where
 
-import           Prelude ()
-import           Prelude.Compat
-
 import qualified Ivory.Language as I
 import qualified Ivory.Artifact as I
 
