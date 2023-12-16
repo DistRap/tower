@@ -16,9 +16,6 @@ module Ivory.Tower.Config.Parser
   , (<?>)
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import qualified Data.Map as M
 import           Text.TOML.Value
 import           Data.Either (lefts, rights)
