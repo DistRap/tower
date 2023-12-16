@@ -1,13 +1,10 @@
-{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 module Ivory.Tower.AST.Chan
   ( Chan(..)
   ) where
 
-#if MIN_VERSION_mainland_pretty(0,6,0)
-import           Text.PrettyPrint.Mainland.Class
-#endif
 import Text.PrettyPrint.Mainland
+import Text.PrettyPrint.Mainland.Class
 
 import Ivory.Tower.AST.SyncChan
 import Ivory.Tower.AST.Signal

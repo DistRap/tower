@@ -62,7 +62,7 @@ library
   build-depends:        base >= 4.6,
                         monadLib,
                         containers,
-                        mainland-pretty >= 0.4.0.0,
+                        mainland-pretty >= 0.6,
                         ivory,
                         ivory-artifact,
                         ivory-backend-c

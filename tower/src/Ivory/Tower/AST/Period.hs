@@ -1,11 +1,8 @@
-{-# LANGUAGE CPP #-}
 
 module Ivory.Tower.AST.Period where
 
-#if MIN_VERSION_mainland_pretty(0,6,0)
-import           Text.PrettyPrint.Mainland.Class
-#endif
 import Text.PrettyPrint.Mainland
+import Text.PrettyPrint.Mainland.Class
 
 import qualified Ivory.Language.Syntax.Type as I
 
