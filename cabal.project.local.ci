@@ -1,0 +1,14 @@
+package tower
+    ghc-options: -Wall -Werror -Wunused-packages
+
+package tower-aadl
+    ghc-options: -Wall -Werror -Wunused-packages
+
+package tower-config
+    ghc-options: -Wall -Werror -Wunused-packages
+
+package tower-hal
+    ghc-options: -Wall -Werror -Wunused-packages
+
+package tower-mini
+    ghc-options: -Wall -Werror -Wunused-packages
