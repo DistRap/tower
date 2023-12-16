@@ -10,6 +10,7 @@ module Ivory.Tower.Types.ChanMap
   , keys
   ) where
 
+import Data.Kind (Type)
 import qualified Data.Map as Map
 import GHC.Exts (Any)
 import Ivory.Language
@@ -18,7 +19,7 @@ import Ivory.Tower.Types.Chan
 import Prelude hiding (lookup)
 import Unsafe.Coerce
 
-newtype ChanMap (v :: Area * -> *) = ChanMap (Map.Map AST.Chan Any)
+newtype ChanMap (v :: Area Type -> Type) = ChanMap (Map.Map AST.Chan Any)
 
 empty :: ChanMap v
 empty = ChanMap Map.empty
