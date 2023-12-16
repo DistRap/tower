@@ -3,7 +3,6 @@
 {-# LANGUAGE RecordWildCards #-}
 module Ivory.Tower.AST.Monitor where
 
-import Data.Monoid ((<>))
 #if MIN_VERSION_mainland_pretty(0,6,0)
 import           Text.PrettyPrint.Mainland.Class
 #endif

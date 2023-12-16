@@ -23,7 +23,6 @@ import Prelude.Compat
 
 import MonadLib
 import Control.Monad.Fix
-import Data.Semigroup
 import Ivory.Tower.Backend
 import Ivory.Tower.Monad.Base
 import Ivory.Tower.Types.Chan

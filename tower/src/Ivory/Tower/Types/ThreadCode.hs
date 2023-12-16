@@ -5,8 +5,6 @@ module Ivory.Tower.Types.ThreadCode
 import Prelude ()
 import Prelude.Compat
 
-import Data.Semigroup
-
 import Ivory.Language
 
 data ThreadCode =

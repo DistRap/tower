@@ -9,7 +9,6 @@ module Ivory.Tower.AST.Tower
 import Prelude ()
 import Prelude.Compat
 
-import Data.Semigroup
 import Data.List (find, union)
 #if MIN_VERSION_mainland_pretty(0,6,0)
 import           Text.PrettyPrint.Mainland.Class

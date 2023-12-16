@@ -18,8 +18,6 @@ import Control.Monad (mplus)
 import Data.Function (on)
 import Data.List (foldl')
 import Data.Maybe (maybeToList)
-import Data.Monoid ((<>))
-import Data.Semigroup
 
 -- Located Things --------------------------------------------------------------
 

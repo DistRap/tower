@@ -1,7 +1,6 @@
 
 module Ivory.Tower.AST.Graph where
 
-import Data.Monoid ((<>))
 import Data.Graph
 import Data.List (groupBy, nub)
 import Control.Monad (guard)
