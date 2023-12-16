@@ -8,11 +8,9 @@
 {-# LANGUAGE TypeOperators #-}
 module Tower.Mini.Component where
 
-import Prelude ()
-import Prelude.Compat
-
 import MonadLib hiding (local)
 import Control.Monad.Fix
+import Data.Kind (Type)
 
 import Ivory.Language
 import Ivory.Tower
@@ -46,7 +44,7 @@ class ExternalOutput a where
   extChanPutHeader :: a -> String
 
 -- | An channel implemented by an external C module.
-data ExternalChan (a :: Area *) = ExternalChan {
+data ExternalChan (a :: Area Type) = ExternalChan {
     _extChanGetSym :: String
     -- ^ Symbol @sym@ for a C function @bool sym(t *data)@ where
     -- @data@ is an output parameter and the return value indicates
@@ -68,14 +66,14 @@ instance ExternalOutput (ExternalChan a) where
   extChanPutSym = _extChanPutSym
   extChanPutHeader = _extChanPutHeader
 
-newtype ExternalInputChan (a :: Area *) =
+newtype ExternalInputChan (a :: Area Type) =
   ExternalInputChan { unEIC :: ExternalChan a }
 
 instance ExternalInput (ExternalInputChan a) where
   extChanGetSym = _extChanGetSym . unEIC
   extChanGetHeader = _extChanGetHeader . unEIC
 
-newtype ExternalOutputChan (a :: Area *) =
+newtype ExternalOutputChan (a :: Area Type) =
   ExternalOutputChan { unEOC :: ExternalChan a }
 
 instance ExternalOutput (ExternalOutputChan a) where

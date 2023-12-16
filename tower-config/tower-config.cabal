@@ -1,3 +1,4 @@
+cabal-version:       2.2
 name:                tower-config
 version:             0.1.0.0
 author:              Galois, Inc.
@@ -5,11 +6,10 @@ maintainer:          pat@galois.com
 category:            Language
 homepage:            http://ivorylang.org
 build-type:          Simple
-cabal-version:       >= 1.10
-license:             BSD3
+license:             BSD-3-Clause
 source-repository    this
   type:     git
-  location: https://github.com/GaloisInc/tower
+  location: https://github.com/distrap/tower
 
 library
   exposed-modules:      Ivory.Tower.Config,
@@ -23,7 +23,6 @@ library
                         Text.TOML.Value
 
   build-depends:        base >= 4.6,
-                        base-compat >= 0.6,
                         attoparsec >= 0.12.1.2,
                         bytestring,
                         containers,
@@ -46,9 +45,6 @@ test-suite tests
   ghc-options: -Wall
   build-depends: base >= 4.6,
                  bytestring,
-                 containers,
-                 directory,
-                 filepath,
                  tower,
                  tower-config
 

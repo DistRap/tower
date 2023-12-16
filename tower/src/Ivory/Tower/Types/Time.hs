@@ -3,7 +3,6 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE CPP #-}
 {-# LANGUAGE PostfixOperators #-}
 
 module Ivory.Tower.Types.Time
@@ -32,10 +31,8 @@ module Ivory.Tower.Types.Time
   , prettyTime
   ) where
 
-#if MIN_VERSION_mainland_pretty(0,6,0)
-import           Text.PrettyPrint.Mainland.Class
-#endif
 import Text.PrettyPrint.Mainland
+import Text.PrettyPrint.Mainland.Class
 
 import Ivory.Language
 

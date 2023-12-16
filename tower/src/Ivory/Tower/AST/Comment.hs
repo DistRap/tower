@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 --
 -- User and source location comments.
@@ -8,12 +7,8 @@
 
 module Ivory.Tower.AST.Comment where
 
-import Data.Monoid ((<>))
-
-#if MIN_VERSION_mainland_pretty(0,6,0)
-import           Text.PrettyPrint.Mainland.Class
-#endif
 import Text.PrettyPrint.Mainland
+import Text.PrettyPrint.Mainland.Class
 
 import Ivory.Tower.SrcLoc.Location
 

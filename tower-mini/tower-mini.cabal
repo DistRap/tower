@@ -1,28 +1,25 @@
+cabal-version:       2.2
 name:                tower-mini
 version:             0.0.1.0
 author:              Galois, Inc.
 maintainer:          leepike@galois.com
 category:            Language
 build-type:          Simple
-cabal-version:       >= 1.10
-license:             BSD3
+license:             BSD-3-Clause
 
 library
   exposed-modules: Tower.Mini
   other-modules:   Tower.Mini.Component
 
   build-depends: base >= 4.6
-               , base-compat
                , containers
                , filepath
                , mainland-pretty >= 0.4.0.0
                , monadLib
                , ivory >= 0.1.0.2
-               , ivory-artifact
                , ivory-backend-c
                , tower
                , tower-config
-               , pretty-show
 
   hs-source-dirs:       src
   default-language:     Haskell2010
@@ -33,12 +30,7 @@ test-suite simple
   hs-source-dirs:   test
   main-is:          Simple.hs
   build-depends: base >= 4.6
-               , base-compat
-               , containers
-               , filepath
                , ivory
-               , ivory-artifact
-               , ivory-backend-c
                , tower
                , tower-config
                , tower-mini
@@ -50,12 +42,9 @@ test-suite integrated
   hs-source-dirs:   test
   main-is:          Integrated.hs
   build-depends: base >= 4.6
-               , base-compat
-               , containers
                , filepath
                , ivory
                , ivory-artifact
-               , ivory-backend-c
                , tower
                , tower-config
                , tower-mini

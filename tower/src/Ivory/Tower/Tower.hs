@@ -30,9 +30,6 @@ module Ivory.Tower.Tower
   , showUnique
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import qualified Data.Map as Map
 import Ivory.Tower.Types.Chan
 import Ivory.Tower.Types.Dependencies

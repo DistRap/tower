@@ -24,11 +24,9 @@ module Ivory.Tower.Monad.Handler
   , withLocation
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import MonadLib
 import Control.Monad.Fix
+import Data.Kind (Type)
 import Ivory.Tower.Backend
 import Ivory.Tower.Types.Chan
 import Ivory.Tower.Types.Unique
@@ -65,17 +63,16 @@ instance Functor (Handler area e) where
   fmap f (Handler h) = Handler $ fmap f h
 
 instance Monad (Handler area e) where
-  return x = Handler $ return x
   Handler x >>= f = Handler $ x >>= (\y -> unHandler $ f y)
 
 instance Applicative (Handler area e) where
-  pure = return
+  pure x = Handler $ pure x
   (<*>) = ap
 
 instance MonadFix (Handler area e) where
   mfix f = Handler $ mfix (\x -> unHandler $ f x)
 
-newtype Handler' backend (area :: Area *) e a = Handler'
+newtype Handler' backend (area :: Area Type) e a = Handler'
   { unHandler' :: ReaderT Unique
                   (WriterT (PartialHandler, [TowerBackendEmitter backend], [TowerBackendCallback backend area])
                     (Monitor' backend e)) a

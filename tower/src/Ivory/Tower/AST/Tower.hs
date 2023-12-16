@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP         #-}
 {-# LANGUAGE OverloadedStrings #-}
 module Ivory.Tower.AST.Tower
   ( Tower(..)
@@ -6,15 +5,9 @@ module Ivory.Tower.AST.Tower
   , towerFindMonitorByName
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
-import Data.Semigroup
 import Data.List (find, union)
-#if MIN_VERSION_mainland_pretty(0,6,0)
-import           Text.PrettyPrint.Mainland.Class
-#endif
 import Text.PrettyPrint.Mainland
+import Text.PrettyPrint.Mainland.Class
 
 import Ivory.Tower.Types.Unique
 import Ivory.Tower.AST.SyncChan

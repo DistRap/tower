@@ -24,8 +24,8 @@ ramsesMakefile c =
   [ include    aadlFilesMk
   , "RAMSES_PATH" ?= maybeFP (configRamsesPath c)
   , "SMACCM_PATH" ?= "./"
-  , export $"RAMSES_DIR" === "$(RAMSES_PATH)/ramses_resource"
-  , export $"AADL2RTOS_CONFIG_DIR" === "$(RAMSES_PATH)/aadl2rtos_resource"
+  , export $ "RAMSES_DIR" === "$(RAMSES_PATH)/ramses_resource"
+  , export $ "AADL2RTOS_CONFIG_DIR" === "$(RAMSES_PATH)/aadl2rtos_resource"
   , Target ".PHONY" ["all", "tower-clean", "ramses", camkesMakefileName] []
   , Target "all" [camkesMakefileName] []
   , Target "ramses" []

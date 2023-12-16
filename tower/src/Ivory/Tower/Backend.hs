@@ -5,6 +5,7 @@
 
 module Ivory.Tower.Backend where
 
+import Data.Kind (Type)
 import Ivory.Language
 import qualified Ivory.Tower.AST as AST
 import Ivory.Tower.Types.Emitter
@@ -17,12 +18,12 @@ class TowerBackend backend where
   -- top-level (without relying on the class).
 
   -- Type correponds to the channel type
-  data TowerBackendCallback  backend :: Area * -> *
-  data TowerBackendEmitter   backend :: *
+  data TowerBackendCallback  backend :: Area Type -> Type
+  data TowerBackendEmitter   backend :: Type
   -- Type correponds to the channel type
-  data TowerBackendHandler   backend :: Area * -> *
-  data TowerBackendMonitor   backend :: *
-  data TowerBackendOutput    backend :: *
+  data TowerBackendHandler   backend :: Area Type -> Type
+  data TowerBackendMonitor   backend :: Type
+  data TowerBackendOutput    backend :: Type
 
   callbackImpl :: IvoryArea a
                => backend

@@ -18,12 +18,8 @@ module Ivory.Tower.Monad.Tower
   , towerPutSignalCode
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import MonadLib
 import Control.Monad.Fix
-import Data.Semigroup
 import Ivory.Tower.Backend
 import Ivory.Tower.Monad.Base
 import Ivory.Tower.Types.Chan
@@ -42,12 +38,11 @@ instance Functor (Tower e) where
   fmap f (Tower h) = Tower $ fmap f h
 
 instance Monad (Tower e) where
-  return x = Tower $ return x
   Tower x >>= f =
     Tower $ x >>= (\y -> unTower $ f y)
 
 instance Applicative (Tower e) where
-  pure = return
+  pure x = Tower $ pure x
   (<*>) = ap
 
 instance MonadFix (Tower e) where
