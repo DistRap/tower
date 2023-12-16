@@ -38,9 +38,6 @@ module Tower.Mini (
   , Comp.outputPort'
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import Data.List                 (partition)
 import MonadLib                  (forM_, runWriterT, when)
 import System.FilePath           ((</>))

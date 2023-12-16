@@ -12,7 +12,6 @@ library
   other-modules:   Tower.Mini.Component
 
   build-depends: base >= 4.6
-               , base-compat
                , containers
                , filepath
                , mainland-pretty >= 0.4.0.0
@@ -33,7 +32,6 @@ test-suite simple
   hs-source-dirs:   test
   main-is:          Simple.hs
   build-depends: base >= 4.6
-               , base-compat
                , containers
                , filepath
                , ivory
@@ -50,7 +48,6 @@ test-suite integrated
   hs-source-dirs:   test
   main-is:          Integrated.hs
   build-depends: base >= 4.6
-               , base-compat
                , containers
                , filepath
                , ivory

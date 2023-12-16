@@ -8,9 +8,6 @@
 {-# LANGUAGE TypeOperators #-}
 module Tower.Mini.Component where
 
-import Prelude ()
-import Prelude.Compat
-
 import MonadLib hiding (local)
 import Control.Monad.Fix
 
