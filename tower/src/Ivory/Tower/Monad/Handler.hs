@@ -24,9 +24,6 @@ module Ivory.Tower.Monad.Handler
   , withLocation
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import MonadLib
 import Control.Monad.Fix
 import Ivory.Tower.Backend

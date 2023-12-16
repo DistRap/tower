@@ -11,9 +11,6 @@
 
 module Ivory.Tower.SrcLoc.Location where
 
-import Prelude ()
-import Prelude.Compat
-
 import Control.Monad (mplus)
 import Data.Function (on)
 import Data.List (foldl')

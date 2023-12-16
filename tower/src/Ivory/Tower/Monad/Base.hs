@@ -10,9 +10,6 @@ module Ivory.Tower.Monad.Base
   , runBase
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import Control.Arrow (first)
 import Control.Monad.Fix
 import qualified Data.Map as Map

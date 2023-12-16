@@ -60,7 +60,6 @@ library
   other-modules:        Ivory.Tower.Types.ChanMap
 
   build-depends:        base >= 4.6,
-                        base-compat >= 0.6,
                         monadLib,
                         containers,
                         mainland-pretty >= 0.4.0.0,

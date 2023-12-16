@@ -18,9 +18,6 @@ module Ivory.Tower.Monad.Tower
   , towerPutSignalCode
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import MonadLib
 import Control.Monad.Fix
 import Ivory.Tower.Backend

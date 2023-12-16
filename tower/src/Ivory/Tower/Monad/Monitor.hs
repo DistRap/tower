@@ -16,9 +16,6 @@ module Ivory.Tower.Monad.Monitor
   , liftTower -- XXX UNSAFE TO USE
   ) where
 
-import Prelude ()
-import Prelude.Compat
-
 import MonadLib
 import Control.Monad.Fix
 import Ivory.Tower.Backend

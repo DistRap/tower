@@ -2,9 +2,6 @@
 
 module Ivory.Tower.Coroutine where
 
-import Prelude ()
-import Prelude.Compat
-
 import Ivory.Language
 import Ivory.Tower.Handler
 import Ivory.Tower.Monad.Handler

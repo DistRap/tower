@@ -5,9 +5,6 @@
  -}
 module Ivory.Tower.Types.SignalCode where
 
-import Prelude ()
-import Prelude.Compat
-
 import qualified Data.Map as Map
 import Ivory.Language
 
