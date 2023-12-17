@@ -66,19 +66,19 @@ integratedTower = do
         call_ printf_bool "quux: %u\n" b'
         emitV e b'
 
-intermon1_get_data :: Def('[Ref s ('Stored Uint8)] ':-> IBool)
+intermon1_get_data :: Def('[Ref s ('Stored Uint8)] :-> IBool)
 intermon1_get_data = importProc "intermon1_get_data" "intermon1.h"
 
-intermon1_put_data :: Def('[ConstRef s ('Stored Uint8)] ':-> ())
+intermon1_put_data :: Def('[ConstRef s ('Stored Uint8)] :-> ())
 intermon1_put_data = importProc "intermon1_put_data" "intermon1.h"
 
-intermon2_get_data :: Def('[Ref s ('Stored IBool)] ':-> IBool)
+intermon2_get_data :: Def('[Ref s ('Stored IBool)] :-> IBool)
 intermon2_get_data = importProc "intermon2_get_data" "intermon2.h"
 
-intermon2_put_data :: Def('[ConstRef s ('Stored IBool)] ':-> ())
+intermon2_put_data :: Def('[ConstRef s ('Stored IBool)] :-> ())
 intermon2_put_data = importProc "intermon2_put_data" "intermon2.h"
 
-intermon1_callback :: Def('[ConstRef s ('Stored Uint8)] ':-> ())
+intermon1_callback :: Def('[ConstRef s ('Stored Uint8)] :-> ())
 intermon1_callback = importProc "callback_get_data" "intermon1_monitor.h"
 
 fooModule :: Module
@@ -88,7 +88,7 @@ fooModule = package "foo" $ do
   dependByName "intermon1_monitor"
   incl run
 
-run :: Def ('[] ':-> ())
+run :: Def ('[] :-> ())
 run = voidProc "run" $ body $ do
   intermon1_data <- local izero
   intermon1_has_data <- call intermon1_get_data intermon1_data
@@ -105,7 +105,7 @@ driverModule = package "driver" $ do
   incl printf_byte
   incl printf_bool
   depend fooModule
-  let ivoryMain :: Def('[] ':-> Sint32)
+  let ivoryMain :: Def('[] :-> Sint32)
       ivoryMain = proc "main" $ body $ do
         upTo (0 :: Ix 11) 10 $ \ix -> do
           byteRef <- local (ival (castDefault (fromIx ix)))
@@ -128,7 +128,7 @@ driverModule' = package "driver" $ do
   incl printf_byte
   incl printf_bool
   dependByName "foo"
-  let ivoryMain :: Def('[] ':-> Sint32)
+  let ivoryMain :: Def('[] :-> Sint32)
       ivoryMain = proc "main" $ body $ do
         upTo (0 :: Ix 11) 10 $ \ix -> do
           byteRef <- local (ival (castDefault (fromIx ix)))
@@ -136,7 +136,7 @@ driverModule' = package "driver" $ do
           call_ printf_byte "driver in: %u\n" byte
           call_ intermon1_put_data (constRef byteRef)
           zero <- constRef `fmap` local izero
-          call_ (importProc "component_entry" "foo.h" :: Def('[ConstRef s ('Stored Sint64)] ':-> ())) zero
+          call_ (importProc "component_entry" "foo.h" :: Def('[ConstRef s ('Stored Sint64)] :-> ())) zero
           bRef <- local izero
           has_data <- call intermon2_get_data bRef
           ifte_ has_data

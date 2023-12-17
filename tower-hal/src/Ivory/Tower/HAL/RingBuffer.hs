@@ -84,7 +84,7 @@ ringBuffer s = RingBuffer
     r <- deref remove
     return (i ==? r)
 
-  push_proc :: Def('[ConstRef s a]':->IBool)
+  push_proc :: Def('[ConstRef s a]:->IBool)
   push_proc = proc (named "push") $ \v -> body $ do
     f <- full
     ifte_ f (ret false) $ do
@@ -93,7 +93,7 @@ ringBuffer s = RingBuffer
       incr insert >>= store insert
       ret true
 
-  pop_proc :: Def('[Ref s a]':->IBool)
+  pop_proc :: Def('[Ref s a]:->IBool)
   pop_proc = proc (named "pop") $ \v -> body $ do
     e <- empty
     ifte_ e (ret false) $ do

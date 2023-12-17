@@ -16,7 +16,7 @@ import Ivory.Language
 import Ivory.Tower
 
 newtype ComponentM e a = ComponentM {
-    unComponentM :: WriterT (ModuleDef, [Def('[] ':-> ())]) (Tower e) a
+    unComponentM :: WriterT (ModuleDef, [Def('[] :-> ())]) (Tower e) a
   } deriving (Functor, Monad, Applicative, MonadFix)
 
 instance BaseUtils ComponentM e where
@@ -125,9 +125,9 @@ inputPort' :: forall e a .
            -> ComponentM e ()
 inputPort' chan_in sym hdr = do
   let n = "input_" ++ sym
-  let ext_get_data :: Def('[Ref s a] ':-> IBool)
+  let ext_get_data :: Def('[Ref s a] :-> IBool)
       ext_get_data = importProc sym hdr
-      gen_mon_callback :: Def('[ConstRef s a] ':-> ())
+      gen_mon_callback :: Def('[ConstRef s a] :-> ())
       gen_mon_callback = importProc ("callback_" ++ n ++ "_handler") ""
   putComponentCode $ do
     incl $ ext_get_data
@@ -170,7 +170,7 @@ outputPort' :: forall e a .
             -> ComponentM e ()
 outputPort' chan_out sym hdr = do
   let n = "output_" ++ sym
-  let ext_put_data :: Def('[ConstRef s a] ':-> ())
+  let ext_put_data :: Def('[ConstRef s a] :-> ())
       ext_put_data = importProc sym hdr
   putComponentCode $ do
     incl $ ext_put_data

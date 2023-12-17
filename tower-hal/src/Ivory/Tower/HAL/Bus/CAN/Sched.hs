@@ -34,7 +34,7 @@ struct can_transmit_result
 shiftUp :: Def ('[ Ref s0 ('Stored Uint8)
                  , Ref s1 ('Stored Uint32), Ref s2 ('Stored Uint8)
                  , Ref s3 ('Stored Uint32), Ref s4 ('Stored Uint8)
-                 ] ':-> IBool)
+                 ] :-> IBool)
 shiftUp = proc "shift_task_up" $ \ insert_position new_prio new_task current_prio current_task -> body $ do
   new <- deref new_prio
   when (new ==? maxBound) $ ret true
@@ -55,7 +55,7 @@ shiftUp = proc "shift_task_up" $ \ insert_position new_prio new_task current_pri
 shiftDown :: Def ('[ Ref s0 ('Stored Uint8)
                    , Ref s1 ('Stored Uint32), Ref s2 ('Stored Uint8)
                    , ConstRef s3 ('Stored Uint32), ConstRef s4 ('Stored Uint8)
-                   ] ':-> IBool)
+                   ] :-> IBool)
 shiftDown = proc "shift_task_down" $ \ target_ref current_prio current_task next_prio next_task -> body $ do
   target <- deref target_ref
   when (target ==? maxBound) $ ret true
@@ -255,7 +255,7 @@ canScheduler mailboxes tasks = do
                             , Ref s1 ('Stored Uint8)
                             , Ref s2 ('Struct "can_message")
                             , ConstRef s3 ('Struct "can_message")
-                            ] ':-> IBool)
+                            ] :-> IBool)
         insertTask = proc "insert_task" $ \ task resched_task resched_mbox last_request req -> body $ do
           comment "Task must not have an outstanding request already."
           last_id <- deref $ last_request ~> can_message_id
