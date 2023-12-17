@@ -114,6 +114,6 @@ getTime :: Ivory eff ITime
 getTime = call getTimeProc
   where
   -- Must be provided by the code generator:
-  getTimeProc :: Def('[]':->ITime)
+  getTimeProc :: Def('[]:->ITime)
   getTimeProc = importProc "tower_get_time" "tower_time.h"
 

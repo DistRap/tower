@@ -42,7 +42,9 @@ import Data.List                 (partition)
 import MonadLib                  (forM_, runWriterT, when)
 import System.FilePath           ((</>))
 import System.Exit               (exitFailure)
+import System.IO (hPutStrLn, stderr)
 import Text.PrettyPrint.Mainland ((<+>), putDoc, text)
+import Text.PrettyPrint (render, vcat)
 
 import qualified Data.Map as Map
 
@@ -126,7 +128,7 @@ instance TowerBackend MiniBackend where
       ( Emitter $ \ref ->
           forM_ targetHandlers $ \(MiniHandler _ cbs _) ->
             forM_ cbs $ \cb ->
-              call_ (importProc (callbackName cb) "" :: Def('[ConstRef s b] ':-> ())) ref
+              call_ (importProc (callbackName cb) "" :: Def('[ConstRef s b] :-> ())) ref
       , MiniEmitter (\tow -> mkDepends tow)
       )
       where
@@ -241,7 +243,8 @@ compileTowerMini _fromEnv mkEnv comps = do
                             , outHdrDir = Just (f </> name </> "include")
                             , outArtDir = Just (f </> name)
                             }
-    cmodules <- compileUnits mods copts'
+    (cmodules, errors) <- runWriterT $ compileUnits mods copts'
+    hPutStrLn stderr $ render $ vcat errors
 
     let (appMods, libMods) =
           partition (\m -> unitName m `elem` packages) cmodules
@@ -281,7 +284,7 @@ buildComponent env (Component nm comp) = do
           dependByName monName
         forM_ (outputPeriodCallbacks code) $ \(_, monName) ->
           dependByName monName
-        let entryProc :: Def('[ConstRef s ('Stored Sint64)] ':-> ())
+        let entryProc :: Def('[ConstRef s ('Stored Sint64)] :-> ())
             entryProc = voidProc "component_entry" $ \i -> body $ do
               -- in the periodic loop, first call each of the
               -- functions generated for the input and output ports of
@@ -289,13 +292,13 @@ buildComponent env (Component nm comp) = do
               forM_ runFns call_
               -- pass along the value coming from the glue code to periodic callbacks
               forM_ (outputPeriodCallbacks code) $ \(cbName, _) -> do
-                call_ (importProc cbName "" :: Def('[ConstRef s ('Stored Sint64)] ':-> ())) i
+                call_ (importProc cbName "" :: Def('[ConstRef s ('Stored Sint64)] :-> ())) i
               retVoid
-            initProc :: Def('[ConstRef s ('Stored Sint64)] ':-> ())
+            initProc :: Def('[ConstRef s ('Stored Sint64)] :-> ())
             initProc = voidProc "component_init" $ \i -> body $ do
               -- pass along the value coming from the glue code to init callbacks
               forM_ (outputInitCallbacks code) $ \(cbName, _) ->
-                call_ (importProc cbName "" :: Def('[ConstRef s ('Stored Sint64)] ':-> ())) i
+                call_ (importProc cbName "" :: Def('[ConstRef s ('Stored Sint64)] :-> ())) i
         private modDefs
         incl entryProc
         incl initProc
