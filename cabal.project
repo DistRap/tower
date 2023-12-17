@@ -8,7 +8,7 @@ packages:
 source-repository-package
   type: git
   location: https://github.com/distrap/ivory
-  tag: 802a976df29a5cac18b689b99f83f39d2f161319
+  tag: 69bae09d064042e2135df2894b613ed5eadd38fa
   subdir:
     ivory
     ivory-artifact
