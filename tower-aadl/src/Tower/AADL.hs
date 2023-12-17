@@ -26,9 +26,11 @@ import           Data.Char
 import           Control.Monad hiding (forever)
 
 import           System.FilePath (addExtension, takeFileName, (<.>))
+import           System.IO (hPutStrLn, stderr)
 import           System.Exit (exitFailure)
-
+import           MonadLib (runWriterT)
 import           Text.PrettyPrint.Leijen hiding ((</>))
+import qualified Text.PrettyPrint
 
 import qualified Ivory.Compile.C.CmdlineFrontend as O
 import qualified Ivory.Compile.C.Types as O
@@ -108,7 +110,12 @@ compileTowerAADLForPlatform fromEnv mkEnv twr' = do
 
   unless (validCIdent appname) $ error $ "appname must be valid c identifier; '"
                                         ++ appname ++ "' is not"
-  cmodules <- O.compileUnits mods copts
+  (cmodules, errors) <- runWriterT $ O.compileUnits mods copts
+  hPutStrLn stderr
+    . Text.PrettyPrint.render
+    $ Text.PrettyPrint.vcat
+        errors
+
   let (appMods, libMods) =
         partition (\m -> O.unitName m `elem` pkgs) cmodules
   O.outputCompiler appMods (as osspecific) (osSpecificOptsApps osspecific cfg copts)

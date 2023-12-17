@@ -16,6 +16,7 @@ library
                , filepath
                , mainland-pretty >= 0.4.0.0
                , monadLib
+               , pretty >= 1.1
                , ivory >= 0.1.0.2
                , ivory-backend-c
                , tower

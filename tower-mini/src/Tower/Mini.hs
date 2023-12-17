@@ -42,7 +42,9 @@ import Data.List                 (partition)
 import MonadLib                  (forM_, runWriterT, when)
 import System.FilePath           ((</>))
 import System.Exit               (exitFailure)
+import System.IO (hPutStrLn, stderr)
 import Text.PrettyPrint.Mainland ((<+>), putDoc, text)
+import Text.PrettyPrint (render, vcat)
 
 import qualified Data.Map as Map
 
@@ -241,7 +243,8 @@ compileTowerMini _fromEnv mkEnv comps = do
                             , outHdrDir = Just (f </> name </> "include")
                             , outArtDir = Just (f </> name)
                             }
-    cmodules <- compileUnits mods copts'
+    (cmodules, errors) <- runWriterT $ compileUnits mods copts'
+    hPutStrLn stderr $ render $ vcat errors
 
     let (appMods, libMods) =
           partition (\m -> unitName m `elem` packages) cmodules
