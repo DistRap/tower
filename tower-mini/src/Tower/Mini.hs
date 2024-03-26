@@ -243,15 +243,18 @@ compileTowerMini _fromEnv mkEnv comps = do
                             , outHdrDir = Just (f </> name </> "include")
                             , outArtDir = Just (f </> name)
                             }
-    (cmodules, errors) <- runWriterT $ compileUnits mods copts'
+    (ecmodules, errors) <- compileUnits mods copts'
     hPutStrLn stderr $ render $ vcat errors
 
-    let (appMods, libMods) =
-          partition (\m -> unitName m `elem` packages) cmodules
-        libAs = dependencies_artifacts deps
+    case ecmodules of
+      Left errs -> error $ show errs
+      Right cmodules -> do
+        let (appMods, libMods) =
+              partition (\m -> unitName m `elem` packages) cmodules
+            libAs = dependencies_artifacts deps
 
-    outputCompiler appMods libAs copts'
-    outputCompiler libMods []    copts'
+        outputCompiler appMods libAs copts'
+        outputCompiler libMods []    copts'
 
 -- | Build an individual minitower component. This is where much of
 -- the action is, as we finally run the underlying 'Tower' program of
