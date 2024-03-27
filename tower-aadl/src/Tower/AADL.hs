@@ -28,7 +28,6 @@ import           Control.Monad hiding (forever)
 import           System.FilePath (addExtension, takeFileName, (<.>))
 import           System.IO (hPutStrLn, stderr)
 import           System.Exit (exitFailure)
-import           MonadLib (runWriterT)
 import           Text.PrettyPrint.Leijen hiding ((</>))
 import qualified Text.PrettyPrint
 
@@ -110,16 +109,19 @@ compileTowerAADLForPlatform fromEnv mkEnv twr' = do
 
   unless (validCIdent appname) $ error $ "appname must be valid c identifier; '"
                                         ++ appname ++ "' is not"
-  (cmodules, errors) <- runWriterT $ O.compileUnits mods copts
+  (ecmodules, errors) <- O.compileUnits mods copts
   hPutStrLn stderr
     . Text.PrettyPrint.render
     $ Text.PrettyPrint.vcat
         errors
 
-  let (appMods, libMods) =
-        partition (\m -> O.unitName m `elem` pkgs) cmodules
-  O.outputCompiler appMods (as osspecific) (osSpecificOptsApps osspecific cfg copts)
-  O.outputCompiler libMods []              (osSpecificOptsLibs osspecific cfg copts)
+  case ecmodules of
+    Left errs -> error $ show errs
+    Right cmodules -> do
+      let (appMods, libMods) =
+            partition (\m -> O.unitName m `elem` pkgs) cmodules
+      O.outputCompiler appMods (as osspecific) (osSpecificOptsApps osspecific cfg copts)
+      O.outputCompiler libMods []              (osSpecificOptsLibs osspecific cfg copts)
   where
 
   -- | AADL assumes that our handlers will always have a callback define. So we
